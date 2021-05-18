@@ -6,14 +6,15 @@ const port = 3000
 
 // require handlebars in the project
 const exphbs = require('express-handlebars')
-const restaurantList = require('./restaurant.json') // 引入restaurant.json
+// const restaurantList = require('./restaurant.json') // 引入restaurant.json
 
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/todo-list', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost/Restaurant', { useNewUrlParser: true, useUnifiedTopology: true })
+
+const restaurantlist = require('./models/Restaurant')
 
 // setting static files
 app.use(express.static('public'))
-
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
@@ -29,8 +30,10 @@ db.once('open', () => {
 })
 
 app.get('/', (req, res) => {
-  // past the restaurant data into 'index' partial template
-  res.render("index", { restaurant: restaurantList.results })
+  restaurantlist.find()
+  .lean()
+  .then(restaurant=>res.render('index',{restaurant}))
+  .catch(error => console.error(error))
 })
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
