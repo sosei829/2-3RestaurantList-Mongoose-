@@ -99,10 +99,6 @@ app.post('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-
-
-
-
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
   const restaurants = restaurantList.results.filter(restaurant => {
@@ -114,7 +110,14 @@ app.get('/search', (req, res) => {
 
 })
 
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  return restaurantlist.findById(id)
+    .then(restaurant => restaurant.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
 
+})
 
 
 
