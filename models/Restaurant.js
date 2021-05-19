@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const RestaurantSchema = new Schema({
-  id: {
-    type:  Number, // 資料型別是字串
-    // required: true // 這是個必填欄位
-  },
+  // id: {
+  //   type:  Number, // 資料型別是字串
+  //   // required: true // 這是個必填欄位
+  // },
   name: {
     type: String, // 資料型別是字串
     
