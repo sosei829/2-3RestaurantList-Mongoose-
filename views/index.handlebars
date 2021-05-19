@@ -1,20 +1,11 @@
 <header>
   <!-- navigation -->
-  <nav class="navbar navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand" href="/">
-        <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
-          width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
-        我的餐廳清單
-      </a>
-    </div>
-  </nav>
-
+  
   <div class="banner"></div>
 </header>
 
 <!-- search bar -->
-<div class="container search-bar">
+<div class="container search-bar mt-5">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
       <form action="/search">
@@ -53,7 +44,7 @@
                 {{this.rating}}
                 <i class="fas fa-star fa-xs"></i>
               </span>
-
+              <a href="/restaurants/{{ this._id }}/edit">edit</a>
             </div>
           </div>
         </a>

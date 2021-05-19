@@ -64,15 +64,44 @@ app.post('/restaurant', (req, res) => {
 
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
-  console.log (id)
   return restaurantlist.findById(id) //從資料庫找出資料
     .lean()
     .then((restaurant) => res.render('show', { restaurant }))
     .catch(error => console.log(error))
-  
-  // const restaurant = restaurantlist.results.find(restaurant => restaurant._id.toString() === req.params.restaurant_id)
-  // res.render('show', { restaurant: restaurant })
 })
+
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return restaurantlist.findById(id)
+    .lean()
+    .then((restaurant) => res.render('edit', { restaurant }))
+    .catch(error => console.log(error))
+})
+
+app.post('/restaurants/:id/edit', (req, res) => {
+  const restaurant = req.body  // 從 req.body 拿出表單裡的 name 資料 
+  const id = req.params.id
+  
+  return restaurantlist.findById(id)
+    .then(restaurantedit=>{ 
+      restaurantedit.name = restaurant.name,
+      restaurantedit.name_en=restaurant.name_en,
+      restaurantedit.category= restaurant.category,
+      restaurantedit.image=restaurant.image,
+      restaurantedit.location=restaurant.location,
+      restaurantedit.phone=restaurant.phone,
+      restaurantedit.google_map=restaurant.google_map,
+      restaurantedit.rating=restaurant.rating,
+      restaurantedit.description=restaurant.description
+      return restaurantedit.save()
+    })     // 存入資料庫
+    .then(() => res.redirect(`/restaurants/${id}`)) // 新增完成後導回 show
+    .catch(error => console.log(error))
+})
+
+
+
+
 
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
